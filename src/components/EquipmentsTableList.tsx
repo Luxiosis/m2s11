@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
-import './EquipmentsTableList.css'; // Para estilização
+import { useEffect, useState } from "react";
+import axios from "axios";
+import "./EquipmentsTableList.css"; // Para estilização
 
 interface Instrument {
   id: number;
@@ -23,11 +23,11 @@ const InstrumentTableList = () => {
   useEffect(() => {
     const fetchInstruments = async () => {
       try {
-        const response = await axios.get('http://localhost:3000/equipamentos');
+        const response = await axios.get("http://localhost:3000/equipamentos");
         setInstruments(response.data);
         setLoading(false);
       } catch (err) {
-        setError('Erro ao carregar os instrumentos');
+        setError("Erro ao carregar os instrumentos");
         setLoading(false);
       }
     };
@@ -38,37 +38,43 @@ const InstrumentTableList = () => {
   if (error) return <p>{error}</p>;
 
   return (
-    <table className="instrument-table">
-      <thead>
-        <tr>
-          <th>ID</th>
-          <th>Nome</th>
-          <th>Tipo</th>
-          <th>Marca</th>
-          <th>Ano</th>
-          <th>Preço</th>
-          <th>Ativo</th>
-          <th>Voltagem</th>
-          <th>Peso</th>
-        </tr>
-      </thead>
-      <tbody>
-        {instruments.map((instrument) => (
-          <tr key={instrument.id}>
-            <td>{instrument.id}</td>
-            <td>{instrument.nome}</td>
-            <td>{instrument.tipo}</td>
-            <td>{instrument.marca}</td>
-            <td>{instrument.ano}</td>
-            <td>R${instrument.preco.toFixed(2)}</td>
-            <td>{instrument.ativo ? 'Sim' : 'Não'}</td>
-            <td>{instrument.voltagem}</td>
-            <td>{instrument.peso_kg}</td>
+    <div className="table-container">
+      <h2>Lista de Instrumentos</h2>
+      <table className="instrument-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nome</th>
+            <th>Tipo</th>
+            <th>Marca</th>
+            <th>Ano</th>
+            <th>Preço</th>
+            <th>Ativo</th>
+            <th>Voltagem</th>
+            <th>Peso</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {instruments.map((instrument) => (
+            <tr key={instrument.id}>
+              <td>{instrument.id}</td>
+              <td>{instrument.nome}</td>
+              <td>{instrument.tipo}</td>
+              <td>{instrument.marca}</td>
+              <td>{instrument.ano}</td>
+              <td>R${instrument.preco.toFixed(2)}</td>
+              <td>{instrument.ativo ? "Sim" : "Não"}</td>
+              <td>{instrument.voltagem}</td>
+              <td>{instrument.peso_kg}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 };
 
 export default InstrumentTableList;
+
+/* esboço*/
+
