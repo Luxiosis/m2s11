@@ -39,18 +39,21 @@ const InstrumentCardList = () => {
 
   return (
     <div className="card-container">
-      {instruments.map((instrument) => (
-        <div key={instrument.id} className="card">
-          <h3>{instrument.nome}</h3>
-          <p>Tipo: {instrument.tipo}</p>
-          <p>Marca: {instrument.marca}</p>
-          <p>Ano: {instrument.ano}</p>
-          <p>Preço: R${instrument.preco.toFixed(2)}</p>
-          <p>Ativo: {instrument.ativo ? 'Sim' : 'Não'}</p>
-          <p>Voltagem: {instrument.voltagem}</p>
-          <p>Peso: {instrument.peso_kg}</p>
-        </div>
-      ))}
+      <h2>Lista de Instrumentos</h2>
+      <div className="cards-wrapper">
+        {instruments.map((instrument) => (
+          <div key={instrument.nome + instrument.ano} className="card">
+            <h3>{instrument.nome}</h3>
+            <p><strong>Tipo:</strong> {instrument.tipo}</p>
+            <p><strong>Marca:</strong> {instrument.marca}</p>
+            <p><strong>Voltagem:</strong> {instrument.voltagem || 'N/A'}</p>
+            <p><strong>Ano:</strong> {instrument.ano}</p>
+            <p><strong>Preço:</strong> R$ {instrument.preco.toFixed(2)}</p>
+            <p><strong>Peso:</strong> {instrument.peso_kg} kg</p>
+            <p><strong>Status:</strong> <span className={instrument.ativo ? 'status-active' : 'status-inactive'}>{instrument.ativo ? 'Ativo' : 'Inativo'}</span></p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
