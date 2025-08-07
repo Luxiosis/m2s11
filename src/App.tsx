@@ -7,10 +7,15 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <h1>Equipamentos Musicais</h1>
         <nav>
-          <Link to="/">Ver em Cards</Link> | <Link to="/tabela">Ver em Tabela</Link>
+          <button>
+            <Link to="/">Listagem (cards)</Link>
+          </button>
+          <button>
+            <Link to="/tabela">Listagem (tabela)</Link>
+          </button>
         </nav>
+
         <Routes>
           <Route path="/" element={<InstrumentCardList />} />
           <Route path="/tabela" element={<InstrumentTableList />} />
