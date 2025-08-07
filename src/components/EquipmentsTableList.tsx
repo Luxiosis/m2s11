@@ -1,38 +1,10 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import "./EquipmentsTableList.css"; // Para estilização
-
-interface Instrument {
-  id: number;
-  nome: string;
-  tipo: string;
-  marca: string;
-  ano: number;
-  preco: number;
-  ativo: boolean;
-  voltagem: string;
-  peso_kg: number;
-  // Adicione outros campos conforme a estrutura da sua API
-}
+import useGetInstruments from '../hooks/useGetInstruments';
 
 const InstrumentTableList = () => {
-  const [instruments, setInstruments] = useState<Instrument[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchInstruments = async () => {
-      try {
-        const response = await axios.get("http://localhost:3000/equipamentos");
-        setInstruments(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError("Erro ao carregar os instrumentos");
-        setLoading(false);
-      }
-    };
-    fetchInstruments();
-  }, []);
+  const { instruments, loading, error } = useGetInstruments();
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>{error}</p>;
@@ -43,29 +15,27 @@ const InstrumentTableList = () => {
       <table className="instrument-table">
         <thead>
           <tr>
-            <th>ID</th>
             <th>Nome</th>
             <th>Tipo</th>
             <th>Marca</th>
-            <th>Ano</th>
-            <th>Preço</th>
-            <th>Ativo</th>
             <th>Voltagem</th>
-            <th>Peso</th>
+            <th>Ano</th>
+            <th>Preço (R$)</th>
+            <th>Peso (kg)</th>
+            <th>Status</th>
           </tr>
         </thead>
         <tbody>
           {instruments.map((instrument) => (
-            <tr key={instrument.id}>
-              <td>{instrument.id}</td>
+            <tr key={instrument.nome + instrument.ano}>
               <td>{instrument.nome}</td>
               <td>{instrument.tipo}</td>
               <td>{instrument.marca}</td>
+              <td>{instrument.voltagem}</td>
               <td>{instrument.ano}</td>
               <td>R${instrument.preco.toFixed(2)}</td>
-              <td>{instrument.ativo ? "Sim" : "Não"}</td>
-              <td>{instrument.voltagem}</td>
               <td>{instrument.peso_kg}</td>
+              <td>{instrument.ativo ? 'true' : 'false'}</td>
             </tr>
           ))}
         </tbody>
@@ -75,6 +45,4 @@ const InstrumentTableList = () => {
 };
 
 export default InstrumentTableList;
-
-/* esboço*/
 
