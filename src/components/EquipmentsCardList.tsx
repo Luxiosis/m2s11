@@ -1,38 +1,9 @@
-import { useEffect, useState } from 'react';
+import  useGetInstruments  from '../hooks/useGetInstruments';
 import axios from 'axios';
 import './EquipmentsCardList.css'; // Para estilização
 
-interface Instrument {
-  id: number;
-  nome: string;
-  tipo: string;
-  marca: string;
-  ano: number;
-  preco: number;
-  ativo: boolean;
-  voltagem: string;
-  peso_kg: number;
-  // Adicione outros campos conforme a estrutura da sua API
-}
-
 const InstrumentCardList = () => {
-  const [instruments, setInstruments] = useState<Instrument[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchInstruments = async () => {
-      try {
-        const response = await axios.get('http://localhost:3000/equipamentos');
-        setInstruments(response.data);
-        setLoading(false);
-      } catch (err) {
-        setError('Erro ao carregar os instrumentos');
-        setLoading(false);
-      }
-    };
-    fetchInstruments();
-  }, []);
+  const { instruments, loading, error } = useGetInstruments();
 
   if (loading) return <p>Carregando...</p>;
   if (error) return <p>{error}</p>;
